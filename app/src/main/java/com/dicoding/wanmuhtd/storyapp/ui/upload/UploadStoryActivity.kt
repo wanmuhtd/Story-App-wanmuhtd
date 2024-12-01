@@ -92,6 +92,7 @@ class UploadStoryActivity : AppCompatActivity() {
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
+            viewModel.currentImageUri = currentImageUri
             showImage()
         } else {
             currentImageUri = null
