@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aplikasi Cerita</string>
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="message_welcome_page">Temukan cerita menarik, bagikan kisah Anda, dan bergabunglah dengan komunitas kreatif. Dari fiksi hingga cerita inspiratif, Aplikasi Cerita menawarkan pengalaman membaca dan menulis yang menyenangkan. Mulailah perjalanan bercerita Anda sekarang!</string>
+    <string name="title_welcome_page">Selamat Datang di Aplikasi Cerita!</string>
+    <string name="title_signup_page">Isi data pribadi Anda!</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="message_login_page">Masukkan email dan kata sandi Anda untuk masuk</string>
+    <string name="title_login_page">Siap berbagi cerita Anda?</string>
+    <string name="name">Nama</string>
+    <string name="greeting">Halo %1$s,</string>
+    <string name="logout">Keluar</string>
+    <string name="already_have_an_account">Sudah memiliki akun?</string>
+    <string name="register_now">Daftar Sekarang!</string>
+    <string name="do_not_have_any_account">Belum punya akun?</string>
+    <string name="message_signup_page">Masukkan nama, email, dan kata sandi Anda</string>
+    <string name="please_wait">Harap tunggu..</string>
+    <string name="password_minimum_characters">Kata sandi harus memiliki setidaknya 8 karakter</string>
+    <string name="title_profile_setting_page">Pengaturan Profil</string>
+    <string name="title_add_new_story">Tambahkan Cerita Baru</string>
+    <string name="add_story">Tambahkan Cerita</string>
+    <string name="action_profile">Tindakan Profil</string>
+    <string name="action_add_story">Tambahkan Cerita</string>
+    <string name="image">Gambar</string>
+    <string name="story_title">Judul Cerita</string>
+    <string name="story_description">Deskripsi Cerita</string>
+    <string name="story_date">Tanggal cerita ini</string>
+    <string name="add_image">Tambahkan Gambar</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="upload_story">Unggah Cerita</string>
+    <string name="reload_story">Muat ulang cerita</string>
+    <string name="error_invalid_email">Masukkan alamat email yang valid</string>
+    <string name="no_image_selected">Tidak ada gambar yang dipilih</string>
+    <string name="upload_success">Berhasil mengunggah!</string>
+    <string name="language">Bahasa</string>
+    <string name="dark_mode">Mode Gelap</string>
+    <string name="theme">Tema</string>
+    <string name="setting">Pengaturan</string>
+    <string name="go_to_language_setting">Pergi ke pengaturan bahasa</string>
+</resources>
