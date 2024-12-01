@@ -4,7 +4,6 @@ import android.content.Intent
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -38,7 +37,6 @@ class UploadStoryActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this, pref)
     }
     private var currentImageUri: Uri? = null
-    private var previousImageUri: Uri? = null
     private var lat: Double? = null
     private var lon: Double? = null
 
@@ -86,24 +84,17 @@ class UploadStoryActivity : AppCompatActivity() {
 
     private fun startCamera() {
         currentImageUri = getImageUri(this)
-        previousImageUri = currentImageUri
 
-        currentImageUri?.let { uri ->
-            launcherIntentCamera.launch(uri)
-        }
+        launcherIntentCamera.launch(currentImageUri!!)
     }
 
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
         if (isSuccess) {
-            viewModel.currentImageUri = currentImageUri
             showImage()
         } else {
-
-            binding.ivPreviewImageContainer.visibility = View.VISIBLE
-            viewModel.currentImageUri = previousImageUri
-            showImage()
+            currentImageUri = null
         }
     }
 
