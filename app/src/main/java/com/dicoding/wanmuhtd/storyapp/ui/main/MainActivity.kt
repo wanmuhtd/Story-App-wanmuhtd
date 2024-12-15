@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        viewModel.story.observe(this) {
+        viewModel.getStory().observe(this) {
             adapter.submitData(lifecycle, it)
         }
     }

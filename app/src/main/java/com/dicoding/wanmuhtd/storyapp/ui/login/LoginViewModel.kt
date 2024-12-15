@@ -1,5 +1,6 @@
 package com.dicoding.wanmuhtd.storyapp.ui.login
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +21,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                 val response = repository.login(email, password)
                 if (response.loginResult.token.isNotEmpty()) {
                     repository.saveToken(response.loginResult.token)
-
+                    Log.d("Login Result", response.loginResult.toString())
                     val name = response.loginResult.name
                     repository.saveUserData(name, email)
 

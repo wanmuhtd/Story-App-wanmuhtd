@@ -9,6 +9,7 @@ import androidx.paging.liveData
 import com.dicoding.wanmuhtd.storyapp.data.local.entity.Story
 import com.dicoding.wanmuhtd.storyapp.data.local.room.StoryDatabase
 import com.dicoding.wanmuhtd.storyapp.data.pref.UserPreference
+import com.dicoding.wanmuhtd.storyapp.data.remote.model.LoginResponse
 import com.dicoding.wanmuhtd.storyapp.data.remote.retrofit.ApiService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -65,7 +66,8 @@ class UserRepository private constructor(
         userPreference.logout()
     }
 
-    suspend fun login(email: String, password: String) = apiService.login(email, password)
+    suspend fun login(email: String, password: String) : LoginResponse = apiService.login(email, password)
+
     suspend fun register(name: String, email: String, password: String) =
         apiService.register(name, email, password)
 

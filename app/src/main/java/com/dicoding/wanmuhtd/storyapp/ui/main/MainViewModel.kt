@@ -10,7 +10,8 @@ import com.dicoding.wanmuhtd.storyapp.data.UserRepository
 import com.dicoding.wanmuhtd.storyapp.data.local.entity.Story
 
 class MainViewModel(private val repository: UserRepository) : ViewModel() {
-    val story: LiveData<PagingData<Story>> = repository.getPagingStory().cachedIn(viewModelScope)
+    fun getStory(): LiveData<PagingData<Story>> =
+        repository.getPagingStory().cachedIn(viewModelScope)
 
     fun getToken(): LiveData<String?> {
         return repository.getToken().asLiveData()
