@@ -9,6 +9,7 @@ import com.dicoding.wanmuhtd.storyapp.di.Injection
 import com.dicoding.wanmuhtd.storyapp.ui.detail.DetailStoryViewModel
 import com.dicoding.wanmuhtd.storyapp.ui.login.LoginViewModel
 import com.dicoding.wanmuhtd.storyapp.ui.main.MainViewModel
+import com.dicoding.wanmuhtd.storyapp.ui.map.MapsViewModel
 import com.dicoding.wanmuhtd.storyapp.ui.profilesetting.ProfileSettingViewModel
 import com.dicoding.wanmuhtd.storyapp.ui.signup.SignupViewModel
 import com.dicoding.wanmuhtd.storyapp.ui.upload.UploadStoryViewModel
@@ -44,7 +45,9 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(ProfileSettingViewModel::class.java) -> {
                 ProfileSettingViewModel(repository, pref) as T
             }
-
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(repository) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

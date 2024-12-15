@@ -1,5 +1,6 @@
 package com.dicoding.wanmuhtd.storyapp.data.remote.model
 
+import com.dicoding.wanmuhtd.storyapp.data.local.entity.Story
 import com.google.gson.annotations.SerializedName
 
 data class StoryResponse(

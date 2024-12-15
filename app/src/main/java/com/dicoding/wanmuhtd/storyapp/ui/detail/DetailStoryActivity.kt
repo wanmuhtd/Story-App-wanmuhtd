@@ -2,6 +2,7 @@ package com.dicoding.wanmuhtd.storyapp.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -10,11 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.dicoding.wanmuhtd.storyapp.R
+import com.dicoding.wanmuhtd.storyapp.data.local.entity.Story
 import com.dicoding.wanmuhtd.storyapp.data.pref.UserPreference
 import com.dicoding.wanmuhtd.storyapp.data.pref.dataStore
-import com.dicoding.wanmuhtd.storyapp.data.remote.model.Story
 import com.dicoding.wanmuhtd.storyapp.databinding.ActivityDetailBinding
 import com.dicoding.wanmuhtd.storyapp.helper.ViewModelFactory
+import com.dicoding.wanmuhtd.storyapp.helper.getCityNameFromCoordinates
 import com.dicoding.wanmuhtd.storyapp.helper.withDateFormat
 import com.dicoding.wanmuhtd.storyapp.ui.profilesetting.ProfileSettingActivity
 import com.dicoding.wanmuhtd.storyapp.ui.upload.UploadStoryActivity
@@ -79,6 +81,12 @@ class DetailStoryActivity : AppCompatActivity() {
             tvStoryName.text = story.name
             tvStoryDescription.text = story.description
             tvStoryDate.text = story.createdAt.withDateFormat()
+
+            val lat = story.lat
+            val lon = story.lon
+
+            val locationCity = getCityNameFromCoordinates(lat.toDouble(), lon.toDouble(), this@DetailStoryActivity) ?: "Unknown Location"
+            tvStoryLocation.text = locationCity
         }
     }
 

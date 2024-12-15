@@ -105,11 +105,9 @@
             android:layout_height="0dp"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_upload"
+            app:layout_constraintBottom_toTopOf="@id/cb_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_story_image_container"
-            app:layout_constraintTop_toBottomOf="@id/button_container"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -122,6 +120,18 @@
                 android:scrollbars="vertical"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cb_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginVertical="16dp"
+            android:text="@string/add_current_location"
+            app:layout_constraintStart_toEndOf="@+id/iv_story_image_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descEditTextLayout"
+            app:layout_constraintBottom_toTopOf="@id/btn_upload"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_upload"

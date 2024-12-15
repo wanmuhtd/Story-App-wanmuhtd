@@ -14,10 +14,23 @@
         app:title="@string/app_name">
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp">
+
+            <ImageButton
+                android:id="@+id/action_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/action_map"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_map_24"
+                tools:ignore="TouchTargetSizeCheck" />
+
             <!-- Action Add Story -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/action_add_story"

@@ -1,9 +1,14 @@
 package com.dicoding.wanmuhtd.storyapp.ui.upload
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -12,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.dicoding.wanmuhtd.storyapp.R
 import com.dicoding.wanmuhtd.storyapp.data.ResultState
 import com.dicoding.wanmuhtd.storyapp.data.pref.UserPreference
@@ -22,6 +28,9 @@ import com.dicoding.wanmuhtd.storyapp.helper.getImageUri
 import com.dicoding.wanmuhtd.storyapp.helper.imageCompressor
 import com.dicoding.wanmuhtd.storyapp.helper.uriToFile
 import com.dicoding.wanmuhtd.storyapp.ui.main.MainActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -39,7 +48,7 @@ class UploadStoryActivity : AppCompatActivity() {
     private var currentImageUri: Uri? = null
     private var lat: Double? = null
     private var lon: Double? = null
-
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +59,6 @@ class UploadStoryActivity : AppCompatActivity() {
             currentImageUri = it
             showImage()
         }
-
-        getLocation()
-        setupAction()
 
         val builder: AlertDialog.Builder = MaterialAlertDialogBuilder(
             this@UploadStoryActivity,
@@ -80,6 +86,14 @@ class UploadStoryActivity : AppCompatActivity() {
                 }
             }
         }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermission()
+        }
+
+        setupAction()
     }
 
     private fun startCamera() {
@@ -124,12 +138,30 @@ class UploadStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLocation() {
-        @Suppress("DEPRECATION") val location = intent.getParcelableExtra<Location>("location")
-        if (location != null) {
-            lat = location.latitude
-            lon = location.longitude
+    private fun requestPermission() {
+        requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                getLocation()
+            } else {
+                println("Izin lokasi ditolak.")
+            }
         }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        fusedLocationClient.lastLocation.addOnSuccessListener(this, OnSuccessListener<Location> { location ->
+            if (location != null) {
+                lat = location.latitude
+                lon = location.longitude
+                println("Latitude: $lat, Longitude: $lon")
+            } else {
+                println("Lokasi tidak ditemukan.")
+            }
+        })
     }
 
     private fun uploadStory() {
@@ -152,12 +184,25 @@ class UploadStoryActivity : AppCompatActivity() {
                 lonRequestBody,
                 context = this
             )
+            println("Latitude: $lat, Longitude: $lon")
         } ?: showToast(getString(R.string.no_image_selected))
     }
 
     private fun showToast(string: String) {
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
     }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun promptForLocationSettings() {
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        startActivity(intent)
+    }
+
 
     private fun setupAction() {
         val toolbar: MaterialToolbar = findViewById(R.id.my_app_bar)
@@ -179,10 +224,27 @@ class UploadStoryActivity : AppCompatActivity() {
         val profileButton: ImageView = findViewById(R.id.action_profile)
         profileButton.visibility = View.GONE
 
+        val mapButton: ImageView = findViewById(R.id.action_map)
+        mapButton.visibility = View.GONE
+
         binding.apply {
+            cbLocation.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    if (isLocationEnabled()) {
+                        getLocation()
+                    } else {
+                        promptForLocationSettings()
+                    }
+                } else {
+                    lat = null
+                    lon = null
+                }
+            }
+
             btnGallery.setOnClickListener { startGallery() }
             btnCamera.setOnClickListener { startCamera() }
             btnUpload.setOnClickListener { uploadStory() }
         }
     }
+
 }

@@ -41,4 +41,8 @@
     <string name="theme">Tema</string>
     <string name="setting">Pengaturan</string>
     <string name="go_to_language_setting">Pergi ke pengaturan bahasa</string>
+    <string name="error_token_not_found">Token tidak ditemukan</string>
+    <string name="please_fill_the_form_correctly">Tolong isi form dengan benar</string>
+    <string name="network_error_please_check_your_connection">Koneksi error. Silakan periksa koneksi Anda.</string>
+    <string name="regex_email">[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}</string>
 </resources>

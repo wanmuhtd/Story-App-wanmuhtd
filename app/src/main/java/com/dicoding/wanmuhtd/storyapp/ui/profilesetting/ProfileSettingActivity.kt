@@ -77,6 +77,9 @@ class ProfileSettingActivity : AppCompatActivity() {
         val profileButton: ImageView = findViewById(R.id.action_profile)
         profileButton.visibility = View.GONE
 
+        val mapButton: ImageView = findViewById(R.id.action_map)
+        mapButton.visibility = View.GONE
+
         binding.apply {
             btnLogout.setOnClickListener {
                 viewModel.logout()

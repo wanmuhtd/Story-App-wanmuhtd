@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.wanmuhtd.storyapp.data.remote.model.Story
 import com.dicoding.wanmuhtd.storyapp.databinding.ItemStoryBinding
 import com.dicoding.wanmuhtd.storyapp.helper.withDateFormat
 import com.dicoding.wanmuhtd.storyapp.ui.detail.DetailStoryActivity
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
+import com.dicoding.wanmuhtd.storyapp.data.local.entity.Story
 
-class StoryAdapter : ListAdapter<Story, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : PagingDataAdapter<Story, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StoryViewHolder(binding)
@@ -24,7 +24,9 @@ class StoryAdapter : ListAdapter<Story, StoryAdapter.StoryViewHolder>(DIFF_CALLB
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(story)
+        if (story != null){
+            holder.bind(story)
+        }
     }
 
     inner class StoryViewHolder(private val binding: ItemStoryBinding) :

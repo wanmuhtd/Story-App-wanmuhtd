@@ -6,6 +6,9 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
 
     <application
         android:allowBackup="true"
@@ -17,6 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB-FwmVMe9VCgugYcicY9iWHpGk8mEjrkQ" />
+
+        <activity
+            android:name=".ui.map.MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".ui.profilesetting.ProfileSettingActivity"
             android:exported="false" />
@@ -53,13 +65,11 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-        </provider>
-
-        <!-- Trigger Google Play services to install the backported photo picker module. -->
+                android:resource="@xml/file_paths" />
+        </provider> <!-- Trigger Google Play services to install the backported photo picker module. -->
         <!-- suppress AndroidDomInspection -->
         <service
-            android:name="com.google.android.gms.metadata.ModuleDependencies"
+            android:name="com.google.android.gms.metadata.ModuleDepeindencies"
             android:enabled="false"
             android:exported="false"
             tools:ignore="MissingClass">

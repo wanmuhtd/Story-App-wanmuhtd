@@ -44,4 +44,10 @@
     <string name="please_fill_the_form_correctly">Please fill the form correctly</string>
     <string name="network_error_please_check_your_connection">Network error. Please check your connection.</string>
     <string name="regex_email">[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}</string>
+    <string name="action_map">Action map</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="add_current_location">Add current location</string>
+    <string name="story_location">This is story location</string>
+    <string name="retry">Retry</string>
+    <string name="title_map_page">Story Map</string>
 </resources>

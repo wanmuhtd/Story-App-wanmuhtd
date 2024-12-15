@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dicoding.wanmuhtd.storyapp.R
 import com.dicoding.wanmuhtd.storyapp.data.UserRepository
-import com.dicoding.wanmuhtd.storyapp.data.remote.model.Story
+import com.dicoding.wanmuhtd.storyapp.data.local.entity.Story
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException

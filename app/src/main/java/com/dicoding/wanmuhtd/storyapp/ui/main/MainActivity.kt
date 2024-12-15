@@ -15,10 +15,12 @@ import com.dicoding.wanmuhtd.storyapp.data.pref.dataStore
 import com.dicoding.wanmuhtd.storyapp.databinding.ActivityMainBinding
 import com.dicoding.wanmuhtd.storyapp.di.Injection
 import com.dicoding.wanmuhtd.storyapp.helper.ViewModelFactory
+import com.dicoding.wanmuhtd.storyapp.ui.map.MapsActivity
 import com.dicoding.wanmuhtd.storyapp.ui.profilesetting.ProfileSettingActivity
 import com.dicoding.wanmuhtd.storyapp.ui.profilesetting.ProfileSettingViewModel
 import com.dicoding.wanmuhtd.storyapp.ui.upload.UploadStoryActivity
 import com.dicoding.wanmuhtd.storyapp.ui.welcome.WelcomeActivity
+import com.dicoding.wanmuhtd.storyapp.utils.adapter.LoadingStateAdapter
 import com.dicoding.wanmuhtd.storyapp.utils.adapter.StoryAdapter
 import com.google.android.material.card.MaterialCardView
 
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         supportActionBar?.title = (R.string.app_name.toString())
 
         storyAdapter = StoryAdapter()
@@ -61,47 +62,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        setupRecyclerView()
+        binding.rvStory.layoutManager = LinearLayoutManager(this)
         setupAction()
     }
 
     private fun loadStories() {
-        binding.progressBar.visibility = View.VISIBLE
-        binding.rvStory.visibility = View.GONE
-        binding.btnReloadStory.visibility = View.GONE
+        val adapter = StoryAdapter()
+        binding.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
 
-        viewModel.getStories()
-        viewModel.storyList.observe(this) { result ->
-            binding.progressBar.visibility = View.GONE
-            result.onSuccess { stories ->
-                binding.btnReloadStory.visibility = View.GONE
-                binding.rvStory.visibility = View.VISIBLE
-                storyAdapter.submitList(stories)
-            }
-            result.onFailure { error ->
-                Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
-                binding.rvStory.visibility = View.GONE
-                binding.btnReloadStory.visibility = View.VISIBLE
-            }
+        viewModel.story.observe(this) {
+            adapter.submitData(lifecycle, it)
         }
     }
 
-    private fun setupRecyclerView() {
-        binding.rvStory.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = storyAdapter
-        }
-
-    }
 
     private fun setupAction() {
-        binding.btnReloadStory.setOnClickListener {
-            loadStories()
-        }
-
         val addStoryButton: MaterialCardView = findViewById(R.id.action_add_story)
         addStoryButton.setOnClickListener {
             val intent = Intent(this, UploadStoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        val mapButton: ImageView = findViewById(R.id.action_map)
+        mapButton.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
 
@@ -109,6 +97,17 @@ class MainActivity : AppCompatActivity() {
         profileButton.setOnClickListener {
             val intent = Intent(this, ProfileSettingActivity::class.java)
             startActivity(intent)
+        }
+
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.my_app_bar)
+        toolbar.setOnClickListener {
+            scrollToTop()
+        }
+    }
+
+    private fun scrollToTop() {
+        binding.apply {
+            rvStory.smoothScrollToPosition(0)
         }
     }
 }
