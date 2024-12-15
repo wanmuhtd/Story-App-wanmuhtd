@@ -50,4 +50,5 @@
     <string name="story_location">This is story location</string>
     <string name="retry">Retry</string>
     <string name="title_map_page">Story Map</string>
+    <string name="failed_load_stories">Failed to load stories</string>
 </resources>

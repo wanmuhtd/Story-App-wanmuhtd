@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.wanmuhtd.storyapp.R
 import com.dicoding.wanmuhtd.storyapp.data.pref.UserPreference
@@ -70,12 +71,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val mapButton: ImageView = findViewById(R.id.action_map)
         mapButton.visibility = View.GONE
+
+        binding.retryButton.setOnClickListener {
+            viewModel.getStoriesWithLocation()
+            binding.progressBar.visibility = View.VISIBLE
+            binding.retryButton.visibility = View.GONE
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         setMapStyle()
         viewModel.storyList.observe(this) { result ->
+            binding.progressBar.visibility = View.VISIBLE
+            binding.retryButton.visibility = View.GONE
+            result.onFailure {
+                Toast.makeText(this, getString(R.string.failed_load_stories), Toast.LENGTH_SHORT).show()
+                binding.progressBar.visibility = View.GONE
+                binding.retryButton.visibility = View.VISIBLE
+            }
             result.onSuccess { stories ->
                 for (story in stories) {
                     val latLng = LatLng(story.lat.toDouble(), story.lon.toDouble())
@@ -85,6 +99,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         .snippet(story.description))
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 }
+                binding.progressBar.visibility = View.GONE
+                binding.retryButton.visibility = View.GONE
             }
         }
     }
