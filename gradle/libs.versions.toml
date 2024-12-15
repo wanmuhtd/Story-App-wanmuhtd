@@ -19,8 +19,8 @@ googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
 playServicesMaps = "19.0.0"
 coreTesting = "2.1.0"
 kotlinxCoroutinesTest = "1.6.1"
-mockitoCore = "4.4.0"
-mockitoInline = "4.4.0"
+mockitoCore = "4.8.0"
+mockitoInline = "4.6.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
